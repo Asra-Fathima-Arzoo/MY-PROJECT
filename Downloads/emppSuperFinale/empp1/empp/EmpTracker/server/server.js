@@ -1,5 +1,11 @@
-const express = require('express');
+require('dotenv').config();  // ✅ Load .env
+
+console.log("Loaded URI:", process.env.MONGO_URI);  // ✅ Debug output
+
 const mongoose = require('mongoose');
+
+const express = require('express');
+//const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
@@ -7,7 +13,11 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://mani:Mani96@cluster0.epppp2y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+
+mongoose.connect(process.env.MONGO_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
